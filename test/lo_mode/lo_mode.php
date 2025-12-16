@@ -1,5 +1,8 @@
 <?php
-    // header('Access-Control-Allow-Origin: *'); 
+    // API de recupération des donnée ou d'écriture pour la table commentaire 
+        // possibilité d'en faire une api pour tout la gestions de la base de donnée 
+
+    // header('Access-Control-Allow-Origin: *');  // donne acces a tout les site meme externe d'utiliser l'api
     header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
     header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
@@ -14,6 +17,7 @@
         if (isset($_GET["action"])) {
             // demande des données
             if ($_GET["action"] == "lecture") {
+                // requete de base
                 $requete  = "SELECT id_commentaire as Id,
                                     commentaire_nom as Nom,
                                     commentaire_texte as Texte,
@@ -21,7 +25,7 @@
                                     commentaire_status as Status
                                     From commentaire
                                     ";
-                
+                // JE GARDE MAIS C PAS UTILE POUR CE QUI EST DEMANDAIS POUR CETTE PARTIE
                 //  // choix de la table
                 // if (isset($_GET["table"])) {
                 //     $table = $_GET["table"];
@@ -33,29 +37,36 @@
                     //                  JOIN rubrique ON id_rubrique = id_rubrique";
                     // }
                     // definir le nombre maximum d'element renvoyer
+
+                    // PERMET D'AJOUTER UNE LIMITE AU NOMBRE D'ELEMENT ENVOYER (pratique si un affichage limiter)
                     if (isset($_GET["limit"])) {
                         $limit = intval($_GET["limit"]);
                         $requete .= " LIMIT ?";
                         $execution[] = $limit;
                     }
+
                     // echo $requete; // debug
+
                     $reponse = $db->prepare($requete);
                     $reponse->execute($execution); 
-                    $formatted_results = $reponse->fetchAll(PDO::FETCH_NUM);
+                    $formatted_results = $reponse->fetchAll(PDO::FETCH_NUM); // pour construire le tableau a envoyer
                 }
                 // edition des données
+                // verfication des prerecis
                 if(
                     ($_GET["action"] == "edition") &&
-                    (isset($_GET["modification"])) &&
+                    (isset($_GET["status"])) &&
                     (isset($_GET["id"]))
                     ) {
-                    $modification = $_GET["modification"];
+
+                    $status = $_GET["status"];
                     $id = $_GET["id"];
                     $requete = "UPDATE commentaire SET commentaire_status = ? WHERE ?";     
     
                     // echo $requete; // debug
+
                     $reponse = $db->prepare($requete);
-                    $success = $reponse->execute([$modification, $id]);     
+                    $success = $reponse->execute([$status, $id]);     
 
                     if ($success) {
                         $formatted_results = ["success" => true, "message" => "Statut mis à jour."];
@@ -70,6 +81,7 @@
             }
             else {
                 // gestion des erreurs
+                // ?
             }
         }
     

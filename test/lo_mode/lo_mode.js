@@ -2,10 +2,14 @@
 
 async function Tableau () {
     let div_tableau = document.getElementById("tableau");
-    div_tableau.innerHTML = ""; // vide la div
+    div_tableau.innerHTML = ""; // vide la div tableau
+
     let table = document.createElement("table");
     div_tableau.appendChild(table)
+
     let intitules = ["Nom", "Commentaire", "Note", "Status (Valide/Invalide)", "Action"];
+
+    // crée la premiere ligne du tableau
     let tr = document.createElement("tr");
     table.appendChild(tr);
     intitules.forEach((intitule) => {
@@ -14,6 +18,7 @@ async function Tableau () {
         th.textContent = intitule;
     })
     
+
     const requeteURL = "http://localhost/JPO/site_jpo/test/lo_mode/lo_mode.php?table=commentaire&action=lecture";
     let data = [];
 
@@ -97,7 +102,7 @@ function modifieStatus (id, status) {
 
     }
     console.log(new_status);
-    fetch(`http://localhost/JPO/site_jpo/test/lo_mode/lo_mode.php?table=commentaire&action=edition&id=${id}&modification=${new_status}`);
+    fetch(`http://localhost/JPO/site_jpo/test/lo_mode/lo_mode.php?table=commentaire&action=edition&id=${id}&status=${new_status}`);
 
 }
 
