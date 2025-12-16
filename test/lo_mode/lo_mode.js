@@ -18,8 +18,8 @@ async function Tableau () {
         th.textContent = intitule;
     })
     
-
-    const requeteURL = "http://localhost/JPO/site_jpo/test/lo_mode/lo_mode.php?table=commentaire&action=lecture";
+    // requete en mode lecture
+    const requeteURL = "http://localhost/JPO/site_jpo/test/lo_mode/lo_mode.php?action=lecture";
     let data = [];
 
     try {
@@ -27,7 +27,12 @@ async function Tableau () {
         if (!response.ok) {
             throw new Error(`Erreur HTTP: ${response.status}`);
         }
-        
+        // data est sous la forme 
+        // 0 : id
+        // 1 : nom
+        // 2 : commentaire
+        // 3 : note
+        // 4 : status
         data = await response.json();
     }
     catch (error) {
@@ -37,33 +42,43 @@ async function Tableau () {
     console.log(data)
 
     data.forEach((row)=> {
+        // creation de la ligne
         let tr = document.createElement("tr");
         table.appendChild(tr);
+        // creation de chaque colone
         row.forEach((element, index) => {
+            // pour tous suaf l'id
             if (index != 0) {
                 let td = document.createElement("td");
                 tr.appendChild(td);
+
+                // gere la colone Status
                 if (index == 4){
-                    td.id = `Status-${row[0]}`;
+                    td.id = `Status-${row[0]}`; // definie l'id afin de facilité la modification
+                    // si actif
                     if (element == 0) {
                         td.textContent = "Actif";
                     }
+                    // si inactif
                     else {
                         td.textContent = "Inactif";
     
                     }
                 }
+                // gere les autres colone
                 else {
                     td.textContent = element;
     
                 }  
             }
         })
-        let td_action = document.createElement("td");
+        // creation de la colone action 
+        let td_action = document.createElement("td"); 
         tr.appendChild(td_action);
         let button = document.createElement("button");
         td_action.appendChild(button)
-        button.id = `Button-Status-${row[0]}`;
+        button.id = `Button-Status-${row[0]}`; // pour faciliter la modification
+        // addeventlistener qui permet de changer le status dans la base de donnée
         button.addEventListener('click', () => {
             modifieStatus(row[0], row[4])
             if (row[4] == 1) {
@@ -72,7 +87,7 @@ async function Tableau () {
             else {
                 row[4] = 1;
             }
-            // console.log(row.Status);
+            // console.log(row.Status); // debug
             
         });
         if (row[4]== 0) {
@@ -87,23 +102,36 @@ async function Tableau () {
 
 function modifieStatus (id, status) {
     let new_status;
+    //recuperation des elements du dom
     let button = document.getElementById(`Button-Status-${id}`);
     let td = document.getElementById(`Status-${id}`);
     
+    // passe de invalide a valide
     if (status == 0) {
         new_status = 1;
         button.textContent = "Validé";
-        td.textContent = "Invalidé";
+        td.textContent = "Inactif";
     }
+    // passe de valide a invalide
     else {
         new_status = 0;
         button.textContent = "Invalidé";
-        td.textContent = "Validé";
+        td.textContent = "Actif";
 
     }
-    console.log(new_status);
-    fetch(`http://localhost/JPO/site_jpo/test/lo_mode/lo_mode.php?table=commentaire&action=edition&id=${id}&status=${new_status}`);
+    // console.log(new_status); // debug
+
+    // requete url api en mode edition
+    let requete_URL_edition = `http://localhost/JPO/site_jpo/test/lo_mode/lo_mode.php?&action=edition&id=${id}&status=${new_status}`
+    fetch(requete_URL_edition);
 
 }
 
+// lance la creation du tableau
 Tableau();
+
+const delais = 30000; // 30s
+
+// refresh le tableau toutes le x (delais) seconde
+setInterval(Tableau, delais);
+

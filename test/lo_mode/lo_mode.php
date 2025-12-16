@@ -61,7 +61,7 @@
 
                     $status = $_GET["status"];
                     $id = $_GET["id"];
-                    $requete = "UPDATE commentaire SET commentaire_status = ? WHERE ?";     
+                    $requete = "UPDATE commentaire SET commentaire_status = ? WHERE id_commentaire = ?";     
     
                     // echo $requete; // debug
 
