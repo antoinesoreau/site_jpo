@@ -4,3 +4,7 @@ Le site pour la SAE 3.01 (front) et 3.03(back), qui sera le site des journée po
 ## Architecture des dossiers
 - Assets regroupe les fichier pour le front-end : img, js et css
 test
+
+## Info partie 
+
+[README lo_mode](./test/lo_mode/README.md)
