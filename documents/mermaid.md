@@ -20,24 +20,24 @@ erDiagram
     pole {
         INT id_pole PK
         VARCHAR(255) pole_nom
-        TINYINT(1) pole_status
+        boolean pole_status
     }
 
     rubrique {
         INT id_rubrique PK
         VARCHAR(255) rubrique_nom
-        TINYINT(1) rubrique_status
+        boolean rubrique_status
     }
 
     commentaire {
         INT id_commentaire PK
         VARCHAR(255) commentaire_nom "Nom de la personne ou anonyme"
-        TINYINT(1) commentaire_ressenti "happy, sad ou middle"
-        TINYINT(1) commentaire_note "de 1 a 5 etoiles"
+        VARCHAR(255) commentaire_ressenti "happy, sad ou middle"
+        INT(11) commentaire_note "de 1 a 5 etoiles"
         VARCHAR id_profile "lyceen-etudiant, parent, entreprise, presse"
         INT id_rubrique FK
         TEXT commentaire_texte
-        TINYINT(1) commentaire_status
+        boolean commentaire_status
     }
 
     commentaire_pole {
