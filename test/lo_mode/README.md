@@ -31,3 +31,7 @@ Est le fichier style associé a la page
 ## lo_mode.html
 
 Est le fichier dom de la page
+
+## jpo.sql
+
+La base de donnée est temporaire, elle sert actuellement a faire des testes
