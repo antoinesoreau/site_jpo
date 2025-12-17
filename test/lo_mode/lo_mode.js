@@ -7,18 +7,8 @@ div_tableau.appendChild(table)
 
 // date en secondes
 let maintenant = Date.now();
-// let date =  maintenant.getFullYear() + '-' + 
-//             String(maintenant.getMonth() + 1).padStart(2, '0') + '-' + 
-//             String(maintenant.getDate()).padStart(2, '0');
 
-// let heure = String(maintenant.getHours()).padStart(2, '0') + ':' + 
-//             String(maintenant.getMinutes()).padStart(2, '0') + ':' + 
-//             String(maintenant.getSeconds()).padStart(2, '0');
-                 
-
-
-
-
+// genere le tableau pour la premiere fois
 async function InitialisationTableau () {
 
     // mise ajour de la date
@@ -46,10 +36,11 @@ async function InitialisationTableau () {
         }
         // data est sous la forme 
         // 0 : id
-        // 1 : nom
-        // 2 : commentaire
-        // 3 : note
-        // 4 : status
+        // 1 : date
+        // 2 : nom
+        // 3 : commentaire
+        // 4 : note
+        // 5 : status
         data = await response.json();
     }
     catch (error) {
@@ -63,20 +54,12 @@ async function InitialisationTableau () {
     
 }
 
+// mise ajour de l'heure
 function updateDate() {
     maintenant = Date.now();
-
-    // date =  maintenant.getFullYear() + '-' + 
-    //         String(maintenant.getMonth() + 1).padStart(2, '0') + '-' + 
-    //         String(maintenant.getDate()).padStart(2, '0');
-
-    // heure = String(maintenant.getHours()).padStart(2, '0') + ':' + 
-    //         String(maintenant.getMinutes()).padStart(2, '0') + ':' + 
-    //         String(maintenant.getSeconds()).padStart(2, '0');
-
-// console.log(date, heure); // "2025-12-17 13:00:00"
 }
 
+// mise ajour affichage avec nouvelle ligne
 async function miseAjour() {
 
 
@@ -97,10 +80,11 @@ async function miseAjour() {
         }
         // data est sous la forme 
         // 0 : id
-        // 1 : nom
-        // 2 : commentaire
-        // 3 : note
-        // 4 : status
+        // 1 : date
+        // 2 : nom
+        // 3 : commentaire
+        // 4 : note
+        // 5 : status
         data = await response.json();
     }
     catch (error) {
@@ -112,6 +96,7 @@ async function miseAjour() {
     Rows(data);
 }
 
+// creer les ligne pour chaque ligne de donnée renvoyer par l'api
 function Rows (data) {
     // cette fonction sert a construire le tableau ligne par ligne
 
@@ -121,15 +106,8 @@ function Rows (data) {
         table.appendChild(tr);
         // creation de chaque colone
         row.forEach((element, index) => {
-            
-            // if (index == 1) {
-            //     const dateString = element;
-            //     console.log(dateString)
-            //     const timestampS = Math.floor(Date.parse(dateString) / 1000);
-            //     console.log(timestampS);
-            // }
 
-            // pour tous suaf l'id
+            // pour tous sauf l'id
             if (index != 0) {
                 let td = document.createElement("td");
                 tr.appendChild(td);
@@ -162,17 +140,17 @@ function Rows (data) {
         button.id = `Button-Status-${row[0]}`; // pour faciliter la modification
         // addeventlistener qui permet de changer le status dans la base de donnée
         button.addEventListener('click', () => {
-            modifieStatus(row[0], row[4])
-            if (row[4] == 1) {
-                row[4] = 0;
+            modifieStatus(row[0], row[5])
+            if (row[5] == 1) {
+                row[5] = 0;
             }
             else {
-                row[4] = 1;
+                row[5] = 1;
             }
             // console.log(row.Status); // debug
             
         });
-        if (row[4]== 0) {
+        if (row[5]== 0) {
             button.textContent = "Invalidé";
         }
         else {
@@ -182,6 +160,7 @@ function Rows (data) {
     })
 }
 
+// permet de modifier le status du commentaire de visible a masqué par l'appui sur le boutton d'action
 function modifieStatus (id, status) {
     let new_status;
     //recuperation des elements du dom

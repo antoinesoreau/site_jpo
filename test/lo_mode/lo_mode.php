@@ -52,7 +52,6 @@
                         $execution[] = $dateStamp; 
                     }
 
-
                     // PERMET D'AJOUTER UNE LIMITE AU NOMBRE D'ELEMENT ENVOYER (pratique si un affichage limiter)
                     if (isset($_GET["limit"])) {
                         $limit = intval($_GET["limit"]);
@@ -60,8 +59,7 @@
                         $execution[] = $limit;
                     }
 
-
-                    
+                    $requete .= " ORDER BY commentaire_date_publication DESC";
 
                     // echo $requete; // debug
 
@@ -80,9 +78,7 @@
                     $status = $_GET["status"];
                     $id = $_GET["id"];
                     $requete = "UPDATE commentaire SET commentaire_status = ? WHERE id_commentaire = ?";     
-    
                     // echo $requete; // debug
-
                     $reponse = $db->prepare($requete);
                     $success = $reponse->execute([$status, $id]);     
 

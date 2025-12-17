@@ -24,6 +24,8 @@ Permet de faire afficher le tableau de tous les commentaires
 
 Nom | Commentaire | Note | Status (Validé/Invalidé) | Action
 
+la table commentaire se met ajour toutes les 30s avec les nouveaux commentaire
+
 ## lo_mode.css
 
 Est le fichier style associé a la page
