@@ -20,5 +20,5 @@
     if (isset($_GET["action"] == "edition") && isset($_GET["id"])) {
         $id = $_GET["id"];
 
-        
+        $requete = "UPDATE "
     }
