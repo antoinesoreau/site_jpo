@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajout de Points - JPO MMI</title>
+    <link rel="stylesheet" href="../assets/css/points_style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Système de Points</h1>
+            <p id="membreInfo">Chargement...</p>
+        </div>
+
+        <!-- Messages -->
+        <div id="successMessage" class="success-message hidden"></div>
+        <div id="errorMessage" class="error-message hidden"></div>
+        <div id="loading" class="loading hidden">Chargement...</div>
+
+        <!-- Section Scan QR -->
+        <div id="scanSection" class="card">
+            <h2>Scanner le QR du visiteur</h2>
+            <form id="scanForm" class="scan-form">
+                <div class="form-group">
+                    <label for="qrInput">Code QR du visiteur</label>
+                    <input 
+                        type="text" 
+                        id="qrInput" 
+                        placeholder="Ex: QR001" 
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">Scanner</button>
+                <button type="button" id="showManualBtn" class="btn btn-secondary">
+                    Entrer le code manuellement
+                </button>
+            </form>
+        </div>
+
+        <!-- Section Entrée Manuelle -->
+        <div id="manualSection" class="card hidden">
+            <h2>Entrer le code manuellement</h2>
+            <form id="manualForm" class="scan-form">
+                <div class="form-group">
+                    <label for="manualInput">Code du visiteur</label>
+                    <input 
+                        type="text" 
+                        id="manualInput" 
+                        placeholder="Ex: QR001" 
+                        autocomplete="off"
+                        required
+                    >
+                </div>
+                <button type="submit" class="btn btn-primary">Valider</button>
+                <button type="button" id="showScanBtn" class="btn btn-secondary">
+                    Retour au scan
+                </button>
+            </form>
+        </div>
+
+        <!-- Info Visiteur -->
+        <div id="visiteurSection" class="card hidden">
+            <div class="visiteur-info">
+                <h3>Visiteur</h3>
+                <p><strong id="visiteurName">-</strong></p>
+                <span class="points-badge" id="visiteurPoints">0 points</span>
+            </div>
+        </div>
+
+        <!-- Sélection des points -->
+        <div id="pointsSection" class="card hidden">
+            <div class="points-selection">
+                <h3>Choisir le nombre de points à ajouter</h3>
+                <div class="points-grid">
+                    <!-- Les boutons sont générés par JavaScript -->
+                </div>
+            </div>
+
+            <button id="confirmBtn" class="btn btn-primary" disabled>
+                Confirmer l'ajout
+            </button>
+            <button id="resetBtn" class="btn btn-secondary">
+                Annuler
+            </button>
+        </div>
+    </div>
+
+    <script src="../assets/js/points_script.js"></script>
+</body>
+</html>
