@@ -4,7 +4,7 @@ CREATE TABLE reels (
     title VARCHAR(255) NOT NULL,
     description TEXT, -- Ici sera stocké le HTML du WYSIWYG
     video_path VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
