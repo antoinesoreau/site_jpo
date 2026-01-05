@@ -1,0 +1,1 @@
+<?php // Route par défaut, utiliser le moins possible (faites un route spécialisé)
